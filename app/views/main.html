@@ -1,0 +1,9 @@
+<div class="jumbotron">
+  <h1>Let's take a <br/><img src="/images/firebase.png" title="Firebase" alt="Firebase" /> quiz!</h1>
+  <p class="lead">
+    In real time!
+  </p>
+  <p><a ng-if="!creatingQuiz" class="btn btn-lg btn-success" ng-click="newQuiz()">Start New Quiz</a></p>
+  <p><a ng-if="creatingQuiz" ng-disabled="true" class="btn btn-lg btn-success">Creating Quiz...</a></p>
+  <p><a ng-hide="creatingQuiz" class="btn btn-lg btn-success" ng-href="#/player">Join Existing Quiz</a></p>
+</div>

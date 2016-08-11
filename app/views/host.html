@@ -1,0 +1,73 @@
+<div class="row" ng-if="quiz.data.state === 'waiting'">
+  <div class="jumbotron">
+    <h1>Join the quiz!</h1>
+    <h3>Go to <span style="color: red;">{{ website }}</span><br/>on your smartphone</h3>
+    <h3>Our PIN code is <span style="color: red;">{{ quiz.$id }}</span></h3>
+    <p><qrcode data="{{ website }}" size="120"></qrcode></p>
+    <p><button class="btn btn-success" ng-click="startQuiz()">Let's begin!</button></p>
+  </div>
+  <div class="col-md-12">
+    <div class="well">
+      <h3>Who's here:</h3>
+      <ul>
+        <li ng-repeat="player in quiz.data.users">
+          <h4>{{ player.screenName }}</h4>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-if="quiz.data.state === 'preQuestion'">
+  <div class="jumbotron">
+    <h1>Next question will be displayed in {{ countdown }} seconds.. </h1>
+  </div>
+</div>
+
+<div class="row" ng-if="quiz.data.state === 'question'">
+  <div class="col-md-12">
+    <h1>{{ currentQuestion.question }}</h1>
+    <h3>{{ countdown }} seconds left..</h3>
+  </div>
+  <div class="col-md-6" ng-repeat="answer in answers">
+    <div class="well">
+      <h2>{{ $index+1 }}</h2>
+      <h2>{{ answer }}</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-if="quiz.data.state === 'postQuestion'">
+  <div class="jumbotron">
+    <h3>And the correct answer:</h3>
+    <h2>{{ currentQuestion.answer }} </h2>
+    <h3>Correct answers by:</h3>
+    <h2 ng-repeat="user in correct">{{ user }}</h2>
+    <h3 ng-if="correct.length == 0">No One :-(</h3>
+    <div>
+      <button ng-if="quiz.data.currentQuestion != quiz.data.questions.length - 1"
+      class="btn btn-success" ng-click="nextQuestion()">Next Question</button>
+      <button ng-if="quiz.data.currentQuestion == quiz.data.questions.length - 1"
+      class="btn btn-success" ng-click="endQuiz()">End Quiz</button>				
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-if="quiz.data.state === 'leaderboard'">
+  <div class="col-md-12">
+    <h1>Leaderboard</h1>
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th></th>
+        <th>User</th>
+        <th>Points</th>
+      </tr>
+      <tr ng-repeat="user in leaderboard | orderBy:'currentPoints':true">
+        <td>{{ $index+1 }}</td>
+        <td>{{ user.screenName }}</td>
+        <th>{{ user.currentPoints }}</th>
+      </tr>
+    </table>
+    <p><button class="btn btn-success" ng-click="startOver()">Start Over</button></p>
+  </div>
+</div>
